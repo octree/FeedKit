@@ -63,60 +63,38 @@ public class FeedParser {
     /// Starts parsing the feed.
     ///
     /// - Returns: The parsed `Result`.
-    public func parse() -> Result<Feed, ParserError> {
+    public func parse() async throws -> Feed {
         if let url = url {
             // The `Data(contentsOf:)` initializer doesn't handle the `feed` URI scheme. As such,
             // it's sanitized first, in case it's in fact a `feed` scheme.
             guard let sanitizedSchemeUrl = url.replacing(scheme: "feed", with: "http") else {
-                return .failure(.internalError(reason: "Failed url sanitizing."))
+                throw ParserError.internalError(reason: "Failed url sanitizing.")
             }
 
             do {
-                data = try Data(contentsOf: sanitizedSchemeUrl)
+                (data, _) = try await URLSession.shared.data(from: url)
             } catch {
-                return .failure(.internalError(reason: error.localizedDescription))
+                throw ParserError.internalError(reason: error.localizedDescription)
             }
         }
 
         if let data = data {
             guard let feedDataType = FeedDataType(data: data) else {
-                return .failure(.feedNotFound)
+                throw ParserError.feedNotFound
             }
             switch feedDataType {
             case .json: parser = JSONFeedParser(data: data)
             case .xml: parser = XMLFeedParser(data: data)
             }
-            return parser!.parse()
+            return try parser!.parse()
         }
 
         if let xmlStream = xmlStream {
             parser = XMLFeedParser(stream: xmlStream)
-            return parser!.parse()
+            return try parser!.parse()
         }
 
-        return .failure(.internalError(reason: "Fatal error. Unable to parse from the initialized state."))
-    }
-
-    /// Starts parsing the feed asynchronously. Parsing runs by default on the
-    /// global queue. You are responsible to manually bring the result closure
-    /// to whichever queue is apropriate, if any.
-    ///
-    /// Usually to the Main queue if UI Updates are needed.
-    ///
-    ///     DispatchQueue.main.async {
-    ///         // UI Updates
-    ///     }
-    ///
-    /// - Parameters:
-    ///   - queue: The queue on which the completion handler is dispatched.
-    ///   - result: The parsed `Result`.
-    public func parseAsync(
-        queue: DispatchQueue = DispatchQueue.global(),
-        result: @escaping (Result<Feed, ParserError>) -> Void
-    ) {
-        queue.async {
-            result(self.parse())
-        }
+        throw ParserError.internalError(reason: "Fatal error. Unable to parse from the initialized state.")
     }
 
     /// Stops parsing XML feeds.
