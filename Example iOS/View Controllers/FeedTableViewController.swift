@@ -25,7 +25,7 @@
 import FeedKit
 import UIKit
 
-let feedURL = URL(string: "http://images.apple.com/main/rss/hotnews/hotnews.rss")!
+let feedURL = URL(string: "https://cyandev.app/blog/rss.xml")!
 
 class FeedTableViewController: UITableViewController {
     let parser = FeedParser(URL: feedURL)
@@ -40,6 +40,16 @@ class FeedTableViewController: UITableViewController {
         Task {
             do {
                 try await updateFeed(parser.parse())
+            } catch {
+                print(error)
+            }
+        }
+
+        Task {
+            do {
+                let feed = try await FeedParser(URL: URL(string: "https://github.com/SwiftOldDriver/iOS-Weekly/releases.atom")!).parse()
+                let atom = feed.atomFeed
+                print(atom?.title)
             } catch {
                 print(error)
             }
