@@ -26,69 +26,54 @@ import Foundation
 
 /// Key-Value pairs with additional parameters for the embedded Media.
 public class MediaParam {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The parameter's key name.
         public var name: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaParam {
-
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaParam.Attributes(attributes: attributeDict)
+        attributes = MediaParam.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaParam.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.name = attributeDict["name"]
-        
+
+        name = attributeDict["name"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaParam: Equatable {
-    
-    public static func ==(lhs: MediaParam, rhs: MediaParam) -> Bool {
+    public static func == (lhs: MediaParam, rhs: MediaParam) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaParam.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaParam.Attributes, rhs: MediaParam.Attributes) -> Bool {
+    public static func == (lhs: MediaParam.Attributes, rhs: MediaParam.Attributes) -> Bool {
         return lhs.name == rhs.name
     }
-    
 }
-

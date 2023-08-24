@@ -27,10 +27,8 @@ import Foundation
 /// The "atom:content" element either contains or links to the content of
 /// the entry.  The content of atom:content is Language-Sensitive.
 public class AtomFeedEntryContent {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// On the atom:content element, the value of the "type" attribute MAY be
         /// one of "text", "html", or "xhtml".  Failing that, it MUST conform to
         /// the syntax of a MIME media type, but MUST NOT be a composite type
@@ -38,13 +36,13 @@ public class AtomFeedEntryContent {
         /// the src attribute is provided, Atom Processors MUST behave as though
         /// the type attribute were present with a value of "text".
         public var type: String?
-        
+
         /// The atom:content MAY have a "src" attribute, whose value MUST be an IRI
         /// reference [RFC3987].  If the "src" attribute is present, atom:content
         /// MUST be empty.  Atom Processors MAY use the IRI to retrieve the
         /// content and MAY choose to ignore remote content or to present it in a
         /// different manner than local content.
-        /// 
+        ///
         /// If the "src" attribute is present, the "type" attribute SHOULD be
         /// provided and MUST be a MIME media type [MIMEREG], rather than "text",
         /// "html", or "xhtml".  The value is advisory; that is to say, when the
@@ -52,65 +50,53 @@ public class AtomFeedEntryContent {
         /// if the server providing that content also provides a media type, the
         /// server-provided media type is authoritative.
         public var src: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension AtomFeedEntryContent {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = AtomFeedEntryContent.Attributes(attributes: attributeDict)
+        attributes = AtomFeedEntryContent.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension AtomFeedEntryContent.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type   = attributeDict["type"]
-        self.src    = attributeDict["src"]
-        
+
+        type = attributeDict["type"]
+        src = attributeDict["src"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension AtomFeedEntryContent: Equatable {
-    
-    public static func ==(lhs: AtomFeedEntryContent, rhs: AtomFeedEntryContent) -> Bool {
+    public static func == (lhs: AtomFeedEntryContent, rhs: AtomFeedEntryContent) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension AtomFeedEntryContent.Attributes: Equatable {
-    
-    public static func ==(lhs: AtomFeedEntryContent.Attributes, rhs: AtomFeedEntryContent.Attributes) -> Bool {
+    public static func == (lhs: AtomFeedEntryContent.Attributes, rhs: AtomFeedEntryContent.Attributes) -> Bool {
         return
             lhs.type == rhs.type &&
             lhs.src == rhs.src
     }
-    
 }

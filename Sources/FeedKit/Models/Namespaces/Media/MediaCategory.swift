@@ -27,78 +27,63 @@ import Foundation
 /// Allows a taxonomy to be set that gives an indication of the type of media
 /// content, and its particular contents. It has two optional attributes.
 public class MediaCategory {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// The URI that identifies the categorization scheme. It is an optional 
+        /// The URI that identifies the categorization scheme. It is an optional
         /// attribute. If this attribute is not included, the default scheme
         /// is "http://search.yahoo.com/mrss/category_schema".
         public var scheme: String?
-        
-        /// The human readable label that can be displayed in end user 
+
+        /// The human readable label that can be displayed in end user
         /// applications. It is an optional attribute.
         public var label: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaCategory {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaCategory.Attributes(attributes: attributeDict)
+        attributes = MediaCategory.Attributes(attributes: attributeDict)
     }
-    
 }
 
-
 extension MediaCategory.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.scheme = attributeDict["scheme"]
-        self.label = attributeDict["label"]
-        
+
+        scheme = attributeDict["scheme"]
+        label = attributeDict["label"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaCategory: Equatable {
-    
-    public static func ==(lhs: MediaCategory, rhs: MediaCategory) -> Bool {
+    public static func == (lhs: MediaCategory, rhs: MediaCategory) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaCategory.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaCategory.Attributes, rhs: MediaCategory.Attributes) -> Bool {
+    public static func == (lhs: MediaCategory.Attributes, rhs: MediaCategory.Attributes) -> Bool {
         return
             lhs.scheme == rhs.scheme &&
             lhs.label == rhs.label
     }
-    
 }

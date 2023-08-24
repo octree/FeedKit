@@ -24,67 +24,56 @@
 
 import Foundation
 
-/// This element contains user-generated tags separated by commas in the decreasing 
-/// order of each tag's weight. Each tag can be assigned an integer weight in 
-/// tag_name:weight format. It's up to the provider to choose the way weight is 
-/// determined for a tag; for example, number of occurrences can be one way to 
+/// This element contains user-generated tags separated by commas in the decreasing
+/// order of each tag's weight. Each tag can be assigned an integer weight in
+/// tag_name:weight format. It's up to the provider to choose the way weight is
+/// determined for a tag; for example, number of occurrences can be one way to
 /// decide weight of a particular tag. Default weight is 1.
 public class MediaTag {
-    
     /// The tag name.
     public var tag: String?
-    
+
     /// The tag weight. Default to 1 if not specified.
     public var weight: Int? = 1
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaTag {
-    
     convenience init(tag: String, weight: Int = 1) {
-        
         self.init()
-        
+
         self.tag = tag
         self.weight = weight
-        
     }
-    
+
     static func tagsFrom(string: String) -> [MediaTag]? {
-        
-        return string.components(separatedBy: ",").compactMap({ (value) -> MediaTag? in
-            
+        return string.components(separatedBy: ",").compactMap { value -> MediaTag? in
+
             let mediaTag = MediaTag()
             let components = value.components(separatedBy: ":")
-            
-            if components.count > 0 {
+
+            if !components.isEmpty {
                 mediaTag.tag = components.first?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             }
-            
+
             if components.count > 1 {
                 mediaTag.weight = Int(components.last?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "")
             }
-            
+
             return mediaTag
-            
-        })
-        
+        }
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaTag: Equatable {
-    
-    public static func ==(lhs: MediaTag, rhs: MediaTag) -> Bool {
+    public static func == (lhs: MediaTag, rhs: MediaTag) -> Bool {
         return
             lhs.tag == rhs.tag &&
             lhs.weight == rhs.weight
     }
-    
 }

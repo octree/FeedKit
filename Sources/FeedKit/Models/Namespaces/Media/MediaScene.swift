@@ -31,33 +31,29 @@ import Foundation
 /// <sceneStartTime> and <sceneEndTime>, which contains title, description,
 /// start and end time of a particular scene in the media, respectively.
 public class MediaScene {
-    
     /// The scene's title.
     public var sceneTitle: String?
-    
+
     /// The scene's description.
     public var sceneDescription: String?
-    
+
     /// The scene's start time.
     public var sceneStartTime: TimeInterval?
-    
+
     /// The scene's end time.
     public var sceneEndTime: TimeInterval?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Equatable
 
 extension MediaScene: Equatable {
-    
-    public static func ==(lhs: MediaScene, rhs: MediaScene) -> Bool {
+    public static func == (lhs: MediaScene, rhs: MediaScene) -> Bool {
         return
             lhs.sceneTitle == rhs.sceneTitle &&
             lhs.sceneDescription == rhs.sceneDescription &&
             lhs.sceneStartTime == rhs.sceneStartTime &&
             lhs.sceneEndTime == rhs.sceneEndTime
     }
-    
 }

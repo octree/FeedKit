@@ -24,72 +24,58 @@
 
 import Foundation
 
-/// The category of `<channel>`. Identifies a category or tag to which the feed 
+/// The category of `<channel>`. Identifies a category or tag to which the feed
 /// belongs.
 public class RSSFeedCategory {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// A string that identifies a categorization taxonomy. It's an optional 
+        /// A string that identifies a categorization taxonomy. It's an optional
         /// attribute of `<category>`. e.g. "http://www.fool.com/cusips"
         public var domain: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension RSSFeedCategory {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = RSSFeedCategory.Attributes(attributes: attributeDict)
+        attributes = RSSFeedCategory.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension RSSFeedCategory.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.domain = attributeDict["domain"]
-        
+
+        domain = attributeDict["domain"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension RSSFeedCategory: Equatable {
-    
-    public static func ==(lhs: RSSFeedCategory, rhs: RSSFeedCategory) -> Bool {
+    public static func == (lhs: RSSFeedCategory, rhs: RSSFeedCategory) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension RSSFeedCategory.Attributes: Equatable {
-    
-    public static func ==(lhs: RSSFeedCategory.Attributes, rhs: RSSFeedCategory.Attributes) -> Bool {
+    public static func == (lhs: RSSFeedCategory.Attributes, rhs: RSSFeedCategory.Attributes) -> Bool {
         return lhs.domain == rhs.domain
     }
-    
 }

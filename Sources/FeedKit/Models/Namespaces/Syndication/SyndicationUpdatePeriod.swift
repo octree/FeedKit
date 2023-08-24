@@ -42,28 +42,26 @@ import Foundation
 ///
 /// - yearly: Every year, the channel is updated the number of times specified
 public enum SyndicationUpdatePeriod: String {
-    case hourly = "hourly"
-    case daily = "daily"
-    case weekly = "weekly"
-    case monthly = "monthly"
-    case yearly = "yearly"
+    case hourly
+    case daily
+    case weekly
+    case monthly
+    case yearly
 }
 
-extension SyndicationUpdatePeriod {
-    
+public extension SyndicationUpdatePeriod {
     /// Lowercase the incoming `rawValue` string to try and match the
     /// `SyUpdatePeriod`'s `rawValue`
     ///
     /// - Parameter rawValue: The raw value.
-    public init?(rawValue: String) {
+    init?(rawValue: String) {
         switch rawValue.lowercased() {
-        case "hourly":  self = .hourly
-        case "daily":   self = .daily
-        case "weekly":  self = .weekly
+        case "hourly": self = .hourly
+        case "daily": self = .daily
+        case "weekly": self = .weekly
         case "monthly": self = .monthly
-        case "yearly":  self = .yearly
+        case "yearly": self = .yearly
         default: return nil
         }
     }
-    
 }

@@ -24,30 +24,30 @@
 
 import Foundation
 
-/// Users can browse podcast subject categories in the iTunes Store by choosing 
-/// a category from the Podcasts pop-up menu in the navigation bar. Use the 
+/// Users can browse podcast subject categories in the iTunes Store by choosing
+/// a category from the Podcasts pop-up menu in the navigation bar. Use the
 /// <itunes:category> tag to specify the browsing category for your podcast.
 ///
-/// You can also define a subcategory if one is available within your category. 
-/// Although you can specify more than one category and subcategory in your 
-/// feed, the iTunes Store only recognizes the first category and subcategory. 
-/// For a complete list of categories and subcategories, see Podcasts Connect 
+/// You can also define a subcategory if one is available within your category.
+/// Although you can specify more than one category and subcategory in your
+/// feed, the iTunes Store only recognizes the first category and subcategory.
+/// For a complete list of categories and subcategories, see Podcasts Connect
 /// categories.
 ///
-/// Note: When specifying categories and subcategories, be sure to properly 
+/// Note: When specifying categories and subcategories, be sure to properly
 /// escape ampersands:
 ///
 /// Single category:
 /// <itunes:category text="Music" />
-/// 
+///
 /// Category with ampersand:
 /// <itunes:category text="TV &amp; Film" />
-/// 
+///
 /// Category with subcategory:
 /// <itunes:category text="Society &amp; Culture">
 ///    <itunes:category text="History" />
 /// </itunes:category>
-/// 
+///
 /// Multiple categories:
 /// <itunes:category text="Society &amp; Culture">
 ///    <itunes:category text="History" />
@@ -56,66 +56,52 @@ import Foundation
 ///    <itunes:category text="Gadgets" />
 /// </itunes:category>
 public class ITunesCategory {
-
     /// The attributes of the element.
     public class Attributes {
-        
         /// The primary iTunes Category.
         public var text: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The iTunes SubCategory.
     public var subcategory: ITunesSubCategory?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension ITunesCategory {
-    
     convenience init(attributes attributesDict: [String: String]) {
         self.init()
-        self.attributes = ITunesCategory.Attributes(attributes: attributesDict)
+        attributes = ITunesCategory.Attributes(attributes: attributesDict)
     }
 }
 
 extension ITunesCategory.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.text = attributeDict["text"]
-        
+
+        text = attributeDict["text"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension ITunesCategory: Equatable {
-    
-    public static func ==(lhs: ITunesCategory, rhs: ITunesCategory) -> Bool {
+    public static func == (lhs: ITunesCategory, rhs: ITunesCategory) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension ITunesCategory.Attributes: Equatable {
-    
-    public static func ==(lhs: ITunesCategory.Attributes, rhs: ITunesCategory.Attributes) -> Bool {
+    public static func == (lhs: ITunesCategory.Attributes, rhs: ITunesCategory.Attributes) -> Bool {
         return lhs.text == rhs.text
     }
-    
 }
-

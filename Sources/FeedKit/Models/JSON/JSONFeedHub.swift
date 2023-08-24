@@ -24,17 +24,15 @@
 
 import Foundation
 
-/// Describes an endpoints that can be used to subscribe to real-time notifications 
+/// Describes an endpoints that can be used to subscribe to real-time notifications
 /// from the publisher of this feed. Each object has a type and url, both of which
 /// are required.
 public struct JSONFeedHub {
-    
     /// The protocol used to talk with the hub, such as "rssCloud" or "WebSub."
     public var type: String?
-    
+
     /// The hub's url.
     public var url: String?
-    
 }
 
 // MARK: - Equatable
@@ -44,22 +42,20 @@ extension JSONFeedHub: Equatable {}
 // MARK: - Codable
 
 extension JSONFeedHub: Codable {
-    
     enum CodingKeys: String, CodingKey {
         case type
         case url
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
         try container.encode(url, forKey: .url)
     }
-    
+
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         type = try values.decode(String.self, forKey: .type)
         url = try values.decodeIfPresent(String.self, forKey: .url)
     }
-    
 }

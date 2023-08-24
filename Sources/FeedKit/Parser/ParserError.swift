@@ -24,11 +24,10 @@
 
 import Foundation
 
-
 /// Error types with `NSError` codes and user info providers
 ///
 /// - feedNotFound: Couldn't parse any known feed.
-/// - feedCDATABlockEncodingError: Unable to convert the bytes in `CDATABlock` 
+/// - feedCDATABlockEncodingError: Unable to convert the bytes in `CDATABlock`
 ///   to Unicode characters using the UTF-8 encoding.
 /// - internalError: An internal error from which the user cannot recover.
 public enum ParserError: Equatable {
@@ -40,55 +39,52 @@ public enum ParserError: Equatable {
 // MARK: - Error Descriptors
 
 extension ParserError: LocalizedError {
-    
     public var errorDescription: String? {
         switch self {
         case .feedNotFound:
             return "Feed not found"
-        case .feedCDATABlockEncodingError(_):
+        case .feedCDATABlockEncodingError:
             return "`CDATAblock` encoding error"
-        case .internalError(let reason):
+        case let .internalError(reason):
             return "Internal unresolved error: \(reason)"
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .feedNotFound:
             return "Couldn't parse any known feed"
-        case .feedCDATABlockEncodingError(let path):
+        case let .feedCDATABlockEncodingError(path):
             return "Unable to convert the bytes in `CDATABlock` to Unicode characters using the UTF-8 encoding at current path: \(path)"
-        case .internalError(let reason):
+        case let .internalError(reason):
             return "Unable to recover from an internal unresolved error: \(reason)"
         }
     }
-    
+
     public var recoverySuggestion: String? {
         switch self {
         case .feedNotFound:
             return "Provide a valid Atom/RSS/JSON feed "
-        case .feedCDATABlockEncodingError(_):
+        case .feedCDATABlockEncodingError:
             return "Make sure the encoding provided in a `CDATABlock` is encoded as UTF-8"
-        case .internalError(_):
+        case .internalError:
             return "If you're seeing this error you probably should open an issue on github"
         }
     }
-    
 }
 
 // MARK: - NSError
 
 extension ParserError {
-    
     /// An error's code for the specified case.
     var code: Int {
         switch self {
         case .feedNotFound: return -1000
         case .feedCDATABlockEncodingError: return -10001
-        case .internalError(_): return -90000
+        case .internalError: return -90000
         }
     }
-    
+
     /// The error's userInfo dictionary for the specified case.
     var userInfo: [String: String] {
         return [
@@ -97,7 +93,7 @@ extension ParserError {
             NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion ?? ""
         ]
     }
-    
+
     /// The error's domain for the specified case.
     var domain: String {
         return "com.feedkit.error"
@@ -107,5 +103,4 @@ extension ParserError {
     public var value: NSError {
         return NSError(domain: domain, code: code, userInfo: userInfo)
     }
-    
 }

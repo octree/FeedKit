@@ -25,92 +25,78 @@
 import Foundation
 
 /// Describes a media object that is attached to the item.
-/// 
+///
 /// <enclosure> is an optional sub-element of <item>.
-/// 
+///
 /// It has three required attributes. url says where the enclosure is located,
 /// length says how big it is in bytes, and type says what its type is, a
 /// standard MIME type.
-/// 
+///
 /// The url must be an http url.
-/// 
-/// <enclosure url="http://www.scripting.com/mp3s/weatherReportSuite.mp3" 
+///
+/// <enclosure url="http://www.scripting.com/mp3s/weatherReportSuite.mp3"
 /// length="12216320" type="audio/mpeg" />
 public class RSSFeedItemEnclosure {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// Where the enclosure is located.
-        /// 
+        ///
         /// Example: http://www.scripting.com/mp3s/weatherReportSuite.mp3
         public var url: String?
-        
+
         /// How big the media object is in bytes.
-        /// 
+        ///
         /// Example: 12216320
         public var length: Int64?
-        
+
         /// Standard MIME type.
-        /// 
+        ///
         /// Example: audio/mpeg
         public var type: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension RSSFeedItemEnclosure {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = RSSFeedItemEnclosure.Attributes(attributes: attributeDict)
+        attributes = RSSFeedItemEnclosure.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension RSSFeedItemEnclosure.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.url     = attributeDict["url"]
-        self.type    = attributeDict["type"]
-        self.length  = Int64(attributeDict["length"] ?? "")
-        
+
+        url = attributeDict["url"]
+        type = attributeDict["type"]
+        length = Int64(attributeDict["length"] ?? "")
     }
-    
 }
 
 // MARK: - Equatable
 
 extension RSSFeedItemEnclosure: Equatable {
-    
-    public static func ==(lhs: RSSFeedItemEnclosure, rhs: RSSFeedItemEnclosure) -> Bool {
+    public static func == (lhs: RSSFeedItemEnclosure, rhs: RSSFeedItemEnclosure) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension RSSFeedItemEnclosure.Attributes: Equatable {
-    
-    public static func ==(lhs: RSSFeedItemEnclosure.Attributes, rhs: RSSFeedItemEnclosure.Attributes) -> Bool {
+    public static func == (lhs: RSSFeedItemEnclosure.Attributes, rhs: RSSFeedItemEnclosure.Attributes) -> Bool {
         return
             lhs.url == rhs.url &&
             lhs.type == rhs.type &&
             lhs.length == rhs.length
     }
-    
 }

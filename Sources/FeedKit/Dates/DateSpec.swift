@@ -32,7 +32,7 @@ import Foundation
 /// See https://www.ietf.org/rfc/rfc3339.txt
 /// - iso8601: The `W3CDTF` date time format specification
 /// See http://www.w3.org/TR/NOTE-datetime
-enum DateSpec {
+enum DateSpec: Sendable {
     case rfc822
     case rfc3999
     case iso8601

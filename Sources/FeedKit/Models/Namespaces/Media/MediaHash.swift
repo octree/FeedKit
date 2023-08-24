@@ -27,71 +27,55 @@ import Foundation
 /// This is the hash of the binary media file. It can appear multiple times as
 /// long as each instance is a different algo. It has one optional attribute.
 public class MediaHash {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// This is the hash of the binary media file. It can appear multiple times as long as 
+        /// This is the hash of the binary media file. It can appear multiple times as long as
         /// each instance is a different algo. It has one optional attribute.
         public var algo: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaHash {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaHash.Attributes(attributes: attributeDict)
+        attributes = MediaHash.Attributes(attributes: attributeDict)
     }
-    
 }
 
-
 extension MediaHash.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.algo = attributeDict["algo"]
-        
+
+        algo = attributeDict["algo"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaHash: Equatable {
-    
-    public static func ==(lhs: MediaHash, rhs: MediaHash) -> Bool {
+    public static func == (lhs: MediaHash, rhs: MediaHash) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaHash.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaHash.Attributes, rhs: MediaHash.Attributes) -> Bool {
+    public static func == (lhs: MediaHash.Attributes, rhs: MediaHash.Attributes) -> Bool {
         return lhs.algo == rhs.algo
     }
-    
 }
-

@@ -27,70 +27,55 @@ import Foundation
 /// This element specifies various statistics about a media object like the
 /// view count and the favorite count. Valid attributes are views and favorites.
 public class MediaStatistics {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The number of views.
         public var views: Int?
 
         /// The number fo favorites.
         public var favorites: Int?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaStatistics {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaStatistics.Attributes(attributes: attributeDict)
+        attributes = MediaStatistics.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaStatistics.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.views = Int(attributeDict["views"] ?? "")
-        self.favorites = Int(attributeDict["favorites"] ?? "")
-        
+
+        views = Int(attributeDict["views"] ?? "")
+        favorites = Int(attributeDict["favorites"] ?? "")
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaStatistics: Equatable {
-    
-    public static func ==(lhs: MediaStatistics, rhs: MediaStatistics) -> Bool {
+    public static func == (lhs: MediaStatistics, rhs: MediaStatistics) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaStatistics.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaStatistics.Attributes, rhs: MediaStatistics.Attributes) -> Bool {
+    public static func == (lhs: MediaStatistics.Attributes, rhs: MediaStatistics.Attributes) -> Bool {
         return
             lhs.views == rhs.views &&
             lhs.favorites == rhs.favorites
     }
-    
 }
-

@@ -27,74 +27,60 @@ import Foundation
 /// Optional link to specify the machine-readable license associated with the
 /// content.
 public class MediaSubTitle {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The type of the subtitle.
         public var type: String?
-        
+
         /// The subtitle language based on the RFC 3066.
         public var lang: String?
-        
+
         /// The location of the subtitle.
         public var href: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaSubTitle {
-
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaSubTitle.Attributes(attributes: attributeDict)
+        attributes = MediaSubTitle.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaSubTitle.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type = attributeDict["type"]
-        self.lang = attributeDict["lang"]
-        self.href = attributeDict["href"]
-        
+
+        type = attributeDict["type"]
+        lang = attributeDict["lang"]
+        href = attributeDict["href"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaSubTitle: Equatable {
-    
-    public static func ==(lhs: MediaSubTitle, rhs: MediaSubTitle) -> Bool {
+    public static func == (lhs: MediaSubTitle, rhs: MediaSubTitle) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaSubTitle.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaSubTitle.Attributes, rhs: MediaSubTitle.Attributes) -> Bool {
+    public static func == (lhs: MediaSubTitle.Attributes, rhs: MediaSubTitle.Attributes) -> Bool {
         return
             lhs.type == rhs.type &&
             lhs.lang == rhs.lang &&
             lhs.href == rhs.href
     }
-    
 }

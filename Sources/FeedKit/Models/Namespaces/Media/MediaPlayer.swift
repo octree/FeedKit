@@ -29,82 +29,67 @@ import Foundation
 /// not specified in the <media:content> element. It has one required attribute
 /// and two optional attributes.
 public class MediaPlayer {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The URL of the player console that plays the media. It is a required attribute.
         public var url: String?
-        
-        /// The width of the browser window that the URL should be opened in. It is 
+
+        /// The width of the browser window that the URL should be opened in. It is
         /// an optional attribute.
         public var width: Int?
-        
-        /// The height of the browser window that the URL should be opened in. It is an 
+
+        /// The height of the browser window that the URL should be opened in. It is an
         /// optional attribute.
         public var height: Int?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaPlayer {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaPlayer.Attributes(attributes: attributeDict)
+        attributes = MediaPlayer.Attributes(attributes: attributeDict)
     }
-    
 }
 
-
 extension MediaPlayer.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.url = attributeDict["url"]
-        self.height = Int(attributeDict["height"] ?? "")
-        self.width = Int(attributeDict["width"] ?? "")
-        
+
+        url = attributeDict["url"]
+        height = Int(attributeDict["height"] ?? "")
+        width = Int(attributeDict["width"] ?? "")
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaPlayer: Equatable {
-    
-    public static func ==(lhs: MediaPlayer, rhs: MediaPlayer) -> Bool {
+    public static func == (lhs: MediaPlayer, rhs: MediaPlayer) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaPlayer.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaPlayer.Attributes, rhs: MediaPlayer.Attributes) -> Bool {
+    public static func == (lhs: MediaPlayer.Attributes, rhs: MediaPlayer.Attributes) -> Bool {
         return
             lhs.width == rhs.width &&
             lhs.height == rhs.height &&
             lhs.url == rhs.url
     }
-    
 }

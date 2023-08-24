@@ -26,72 +26,57 @@ import Foundation
 
 /// Copyright information for the media object. It has one optional attribute.
 public class MediaCopyright {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// The URL for a terms of use page or additional copyright information. 
-        /// If the media is operating under a Creative Commons license, the 
-        /// Creative Commons module should be used instead. It is an optional 
+        /// The URL for a terms of use page or additional copyright information.
+        /// If the media is operating under a Creative Commons license, the
+        /// Creative Commons module should be used instead. It is an optional
         /// attribute.
         public var url: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaCopyright {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaCopyright.Attributes(attributes: attributeDict)
+        attributes = MediaCopyright.Attributes(attributes: attributeDict)
     }
-    
 }
 
-
 extension MediaCopyright.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.url = attributeDict["url"]
-        
+
+        url = attributeDict["url"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaCopyright: Equatable {
-    
-    public static func ==(lhs: MediaCopyright, rhs: MediaCopyright) -> Bool {
+    public static func == (lhs: MediaCopyright, rhs: MediaCopyright) -> Bool {
         return
             lhs.value == rhs.value &&
-                lhs.attributes == rhs.attributes
+            lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaCopyright.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaCopyright.Attributes, rhs: MediaCopyright.Attributes) -> Bool {
+    public static func == (lhs: MediaCopyright.Attributes, rhs: MediaCopyright.Attributes) -> Bool {
         return lhs.url == rhs.url
     }
-    
 }

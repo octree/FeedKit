@@ -26,75 +26,60 @@ import Foundation
 
 /// Optional element for P2P link.
 public class MediaPeerLink {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The peer link's type.
         public var type: String?
-        
+
         /// The location of the peer link provider.
         public var href: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaPeerLink {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaPeerLink.Attributes(attributes: attributeDict)
+        attributes = MediaPeerLink.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaPeerLink.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type = attributeDict["type"]
-        self.href = attributeDict["href"]
-        
+
+        type = attributeDict["type"]
+        href = attributeDict["href"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaPeerLink: Equatable {
-    
-    public static func ==(lhs: MediaPeerLink, rhs: MediaPeerLink) -> Bool {
+    public static func == (lhs: MediaPeerLink, rhs: MediaPeerLink) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaPeerLink.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaPeerLink.Attributes, rhs: MediaPeerLink.Attributes) -> Bool {
+    public static func == (lhs: MediaPeerLink.Attributes, rhs: MediaPeerLink.Attributes) -> Bool {
         return
             lhs.type == rhs.type &&
             lhs.href == rhs.href
     }
-    
 }
-

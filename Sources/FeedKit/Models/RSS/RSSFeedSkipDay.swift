@@ -23,9 +23,9 @@
 //
 
 import Foundation
- 
+
 /// A hint for aggregators telling them which days they can skip.
-/// 
+///
 /// An XML element that contains up to seven <day> sub-elements whose value
 /// is Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday.
 /// Aggregators may not read the channel during days listed in the skipDays
@@ -39,32 +39,30 @@ import Foundation
 /// - saturday: Aggregator hint to skip parsing on `Saturday`.
 /// - sunday: Aggregator hint to skip parsing on `Sunday`.
 public enum RSSFeedSkipDay: String {
-    case monday = "monday"
-    case tuesday = "tuesday"
-    case wednesday = "wednesday"
-    case thursday = "thursday"
-    case friday = "friday"
-    case saturday = "saturday"
-    case sunday = "sunday"
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
+    case sunday
 }
 
-extension RSSFeedSkipDay {
-    
+public extension RSSFeedSkipDay {
     /// Lowercase the incoming `rawValue` string to try and match the
     /// `RSSFeedSkipDay`'s `rawValue`
     ///
     /// - Parameter rawValue: The raw value
-    public init?(rawValue: String) {
+    init?(rawValue: String) {
         switch rawValue.lowercased() {
-        case "monday":     self = .monday
-        case "tuesday":    self = .tuesday
-        case "wednesday":  self = .wednesday
-        case "thursday":   self = .thursday
-        case "friday":     self = .friday
-        case "saturday":   self = .saturday
-        case "sunday":     self = .sunday
+        case "monday": self = .monday
+        case "tuesday": self = .tuesday
+        case "wednesday": self = .wednesday
+        case "thursday": self = .thursday
+        case "friday": self = .friday
+        case "saturday": self = .saturday
+        case "sunday": self = .sunday
         default: return nil
         }
     }
-    
 }

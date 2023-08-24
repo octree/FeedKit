@@ -32,5 +32,5 @@ import Foundation
 enum XMLFeedType: String {
     case atom = "feed"
     case rdf = "rdf:RDF"
-    case rss = "rss"
+    case rss
 }

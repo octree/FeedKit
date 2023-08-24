@@ -31,160 +31,147 @@ import Foundation
 /// audio/video specific, this element can be used to publish any type of
 /// media. It contains 14 attributes, most of which are optional.
 public class MediaContent {
-    
     /// The title of the particular media object. It has one optional attribute.
     public var mediaTitle: MediaTitle?
-    
+
     /// Short description describing the media object typically a sentence in
     /// length. It has one optional attribute.
     public var mediaDescription: MediaDescription?
-    
+
     /// Allows the media object to be accessed through a web browser media player
     /// console. This element is required only if a direct media url attribute is
     /// not specified in the <media:content> element. It has one required attribute
     /// and two optional attributes.
     public var mediaPlayer: MediaPlayer?
-    
+
     /// Allows particular images to be used as representative images for the
     /// media object. If multiple thumbnails are included, and time coding is not
     /// at play, it is assumed that the images are in order of importance. It has
     /// one required attribute and three optional attributes.
     public var mediaThumbnails: [MediaThumbnail]?
-    
+
     /// Highly relevant keywords describing the media object with typically a
     /// maximum of 10 words. The keywords and phrases should be comma-delimited.
     public var mediaKeywords: [String]?
-    
+
     /// Allows a taxonomy to be set that gives an indication of the type of media
     /// content, and its particular contents. It has two optional attributes.
     public var mediaCategory: MediaCategory?
-    
+
     /// The element's attributes.
     public class Attributes {
-        
-        /// Should specify the direct URL to the media object. If not included, 
+        /// Should specify the direct URL to the media object. If not included,
         /// a <media:player> element must be specified.
         public var url: String?
-        
+
         /// The number of bytes of the media object. It is an optional
         /// attribute.
         public var fileSize: Int?
-        
+
         /// The standard MIME type of the object. It is an optional attribute.
         public var type: String?
-        
-        /// Tpe of object (image | audio | video | document | executable). 
-        /// While this attribute can at times seem redundant if type is supplied, 
-        /// it is included because it simplifies decision making on the reader 
-        /// side, as well as flushes out any ambiguities between MIME type and 
+
+        /// Tpe of object (image | audio | video | document | executable).
+        /// While this attribute can at times seem redundant if type is supplied,
+        /// it is included because it simplifies decision making on the reader
+        /// side, as well as flushes out any ambiguities between MIME type and
         /// object type. It is an optional attribute.
         public var medium: String?
-        
-        /// Determines if this is the default object that should be used for 
-        /// the <media:group>. There should only be one default object per 
+
+        /// Determines if this is the default object that should be used for
+        /// the <media:group>. There should only be one default object per
         /// <media:group>. It is an optional attribute.
         public var isDefault: Bool?
-        
-        /// Determines if the object is a sample or the full version of the 
-        /// object, or even if it is a continuous stream (sample | full | nonstop). 
+
+        /// Determines if the object is a sample or the full version of the
+        /// object, or even if it is a continuous stream (sample | full | nonstop).
         /// Default value is "full". It is an optional attribute.
         public var expression: String?
-        
+
         /// The kilobits per second rate of media. It is an optional attribute.
         public var bitrate: Int?
-        
-        /// The number of frames per second for the media object. It is an 
+
+        /// The number of frames per second for the media object. It is an
         /// optional attribute.
         public var framerate: Double?
-        
-        /// The number of samples per second taken to create the media object. 
-        /// It is expressed in thousands of samples per second (kHz). 
+
+        /// The number of samples per second taken to create the media object.
+        /// It is expressed in thousands of samples per second (kHz).
         /// It is an optional attribute.
         public var samplingrate: Double?
-        
-        /// The number of audio channels in the media object. It is an 
+
+        /// The number of audio channels in the media object. It is an
         /// optional attribute.
         public var channels: Int?
-        
-        /// The number of seconds the media object plays. It is an 
+
+        /// The number of seconds the media object plays. It is an
         /// optional attribute.
         public var duration: Int?
-        
+
         /// The height of the media object. It is an optional attribute.
         public var height: Int?
-        
+
         /// The width of the media object. It is an optional attribute.
         public var width: Int?
-        
-        /// The primary language encapsulated in the media object. 
-        /// Language codes possible are detailed in RFC 3066. This attribute 
-        /// is used similar to the xml:lang attribute detailed in the 
-        /// XML 1.0 Specification (Third Edition). It is an optional 
+
+        /// The primary language encapsulated in the media object.
+        /// Language codes possible are detailed in RFC 3066. This attribute
+        /// is used similar to the xml:lang attribute detailed in the
+        /// XML 1.0 Specification (Third Edition). It is an optional
         /// attribute.
         public var lang: String?
-        
     }
-    
+
     /// The element's attributes
     public var attributes: Attributes?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaContent {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaContent.Attributes(attributes: attributeDict)
+        attributes = MediaContent.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaContent.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.url = attributeDict["url"]
-        self.fileSize = Int(attributeDict["fileSize"] ?? "")
-        self.type = attributeDict["type"]
-        self.medium = attributeDict["medium"]
-        self.isDefault = attributeDict["isDefault"]?.toBool()
-        self.expression = attributeDict["expression"]
-        self.bitrate = Int(attributeDict["bitrate"] ?? "")
-        self.framerate = Double(attributeDict["framerate"] ?? "")
-        self.samplingrate = Double(attributeDict["samplingrate"] ?? "")
-        self.channels = Int(attributeDict["channels"] ?? "")
-        self.duration = Int(attributeDict["duration"] ?? "")
-        self.height = Int(attributeDict["height"] ?? "")
-        self.width = Int(attributeDict["width"] ?? "")
-        self.lang = attributeDict["lang"]
-        
+
+        url = attributeDict["url"]
+        fileSize = Int(attributeDict["fileSize"] ?? "")
+        type = attributeDict["type"]
+        medium = attributeDict["medium"]
+        isDefault = attributeDict["isDefault"]?.toBool()
+        expression = attributeDict["expression"]
+        bitrate = Int(attributeDict["bitrate"] ?? "")
+        framerate = Double(attributeDict["framerate"] ?? "")
+        samplingrate = Double(attributeDict["samplingrate"] ?? "")
+        channels = Int(attributeDict["channels"] ?? "")
+        duration = Int(attributeDict["duration"] ?? "")
+        height = Int(attributeDict["height"] ?? "")
+        width = Int(attributeDict["width"] ?? "")
+        lang = attributeDict["lang"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaContent: Equatable {
-    
-    public static func ==(lhs: MediaContent, rhs: MediaContent) -> Bool {
+    public static func == (lhs: MediaContent, rhs: MediaContent) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaContent.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaContent.Attributes, rhs: MediaContent.Attributes) -> Bool {
+    public static func == (lhs: MediaContent.Attributes, rhs: MediaContent.Attributes) -> Bool {
         return
             lhs.bitrate == rhs.bitrate &&
             lhs.channels == rhs.channels &&
@@ -201,5 +188,4 @@ extension MediaContent.Attributes: Equatable {
             lhs.url == rhs.url &&
             lhs.width == rhs.width
     }
-    
 }

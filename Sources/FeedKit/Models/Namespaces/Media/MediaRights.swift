@@ -26,65 +26,51 @@ import Foundation
 
 /// Optional element to specify the rights information of a media object.
 public class MediaRights {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// Is the status of the media object saying whether a media object has 
-        /// been created by the publisher or they have rights to circulate it. 
+        /// Is the status of the media object saying whether a media object has
+        /// been created by the publisher or they have rights to circulate it.
         /// Supported values are "userCreated" and "official".
         public var status: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
 
-    public init() { }
-
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaRights {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaRights.Attributes(attributes: attributeDict)
+        attributes = MediaRights.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaRights.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.status = attributeDict["status"]
-        
+
+        status = attributeDict["status"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaRights: Equatable {
-    
-    public static func ==(lhs: MediaRights, rhs: MediaRights) -> Bool {
+    public static func == (lhs: MediaRights, rhs: MediaRights) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaRights.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaRights.Attributes, rhs: MediaRights.Attributes) -> Bool {
+    public static func == (lhs: MediaRights.Attributes, rhs: MediaRights.Attributes) -> Bool {
         return lhs.status == rhs.status
     }
-    
 }

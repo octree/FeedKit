@@ -29,13 +29,12 @@ import Foundation
 ///
 /// See: https://jsonfeed.org/version/1
 class JSONFeedParser: FeedParserProtocol {
-    
     let data: Data
-    
-    required public init(data: Data) {
+
+    public required init(data: Data) {
         self.data = data
     }
-    
+
     func parse() -> Result<Feed, ParserError> {
         do {
             let decoder = JSONDecoder()
@@ -45,7 +44,5 @@ class JSONFeedParser: FeedParserProtocol {
         } catch {
             return .failure(.internalError(reason: error.localizedDescription))
         }
-        
     }
-    
 }

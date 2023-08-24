@@ -30,80 +30,65 @@ import Foundation
 /// role. These should appear as distinct <media:credit> elements. It has two
 /// optional attributes.
 public class MediaCredit {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// Specifies the role the entity played. Must be lowercase. It is an 
+        /// Specifies the role the entity played. Must be lowercase. It is an
         /// optional attribute.
         public var role: String?
-        
-        /// The URI that identifies the role scheme. It is an optional attribute 
-        /// and possible values for this attribute are ( urn:ebu | urn:yvs ) . The 
-        /// default scheme is "urn:ebu". The list of roles supported under urn:ebu 
-        /// scheme can be found at European Broadcasting Union Role Codes. The 
+
+        /// The URI that identifies the role scheme. It is an optional attribute
+        /// and possible values for this attribute are ( urn:ebu | urn:yvs ) . The
+        /// default scheme is "urn:ebu". The list of roles supported under urn:ebu
+        /// scheme can be found at European Broadcasting Union Role Codes. The
         /// roles supported under urn:yvs scheme are ( uploader | owner ).
         public var scheme: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
- 
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaCredit {
-
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaCredit.Attributes(attributes: attributeDict)
+        attributes = MediaCredit.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaCredit.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.role = attributeDict["role"]
-        self.scheme = attributeDict["scheme"]
-        
+
+        role = attributeDict["role"]
+        scheme = attributeDict["scheme"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaCredit: Equatable {
-    
-    public static func ==(lhs: MediaCredit, rhs: MediaCredit) -> Bool {
+    public static func == (lhs: MediaCredit, rhs: MediaCredit) -> Bool {
         return
             lhs.value == rhs.value &&
-                lhs.attributes == rhs.attributes
+            lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaCredit.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaCredit.Attributes, rhs: MediaCredit.Attributes) -> Bool {
+    public static func == (lhs: MediaCredit.Attributes, rhs: MediaCredit.Attributes) -> Bool {
         return
             lhs.role == rhs.role &&
             lhs.scheme == rhs.scheme
     }
-    
 }
-

@@ -28,81 +28,67 @@ import Foundation
 /// associated with an entry or feed.  This specification assigns no
 /// meaning to the content (if any) of this element.
 public class AtomFeedEntryCategory {
-    
     /// The element's attributes
     public class Attributes {
-        
         /// The "term" attribute is a string that identifies the category to
         /// which the entry or feed belongs.  Category elements MUST have a
         /// "term" attribute.
         public var term: String?
-        
+
         /// The "scheme" attribute is an IRI that identifies a categorization
         /// scheme.  Category elements MAY have a "scheme" attribute.
         public var scheme: String?
-        
+
         /// The "label" attribute provides a human-readable label for display in
         /// end-user applications.  The content of the "label" attribute is
         /// Language-Sensitive.  Entities such as "&amp;" and "&lt;" represent
         /// their corresponding characters ("&" and "<", respectively), not
         /// markup.  Category elements MAY have a "label" attribute.
         public var label: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension AtomFeedEntryCategory {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = AtomFeedEntryCategory.Attributes(attributes: attributeDict)
+        attributes = AtomFeedEntryCategory.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension AtomFeedEntryCategory.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.term   = attributeDict["term"]
-        self.scheme = attributeDict["scheme"]
-        self.label  = attributeDict["label"]
-        
+
+        term = attributeDict["term"]
+        scheme = attributeDict["scheme"]
+        label = attributeDict["label"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension AtomFeedEntryCategory: Equatable {
-    
-    public static func ==(lhs: AtomFeedEntryCategory, rhs: AtomFeedEntryCategory) -> Bool {
+    public static func == (lhs: AtomFeedEntryCategory, rhs: AtomFeedEntryCategory) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension AtomFeedEntryCategory.Attributes: Equatable {
-    
-    public static func ==(lhs: AtomFeedEntryCategory.Attributes, rhs: AtomFeedEntryCategory.Attributes) -> Bool {
+    public static func == (lhs: AtomFeedEntryCategory.Attributes, rhs: AtomFeedEntryCategory.Attributes) -> Bool {
         return
             lhs.term == rhs.term &&
             lhs.scheme == rhs.scheme &&
             lhs.label == rhs.label
     }
-    
 }

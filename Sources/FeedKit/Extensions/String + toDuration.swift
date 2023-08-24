@@ -25,19 +25,17 @@
 import Foundation
 
 extension String {
-
     /// Convert the string representation of a time duration to a Time Interval.
     ///
     /// - Returns: A TimeInterval.
     func toDuration() -> TimeInterval? {
-        let comps = self
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let comps = trimmingCharacters(in: .whitespacesAndNewlines)
             .components(separatedBy: ":")
 
         guard
             !comps.contains(where: { Int($0) == nil }),
             !comps.contains(where: { Int($0)! < 0 })
-            else { return nil }
+        else { return nil }
 
         return comps
             .reversed()
@@ -48,9 +46,5 @@ extension String {
                     pow(Double(60), Double(i))
             }
             .reduce(0, +)
-        
     }
-    
 }
-
-

@@ -27,80 +27,65 @@ import Foundation
 /// This element specifies the rating-related information about a media object.
 /// Valid attributes are average, count, min and max.
 public class MediaStarRating {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The star rating's average.
         public var average: Double?
-        
+
         /// The star rating's total count.
         public var count: Int?
-        
+
         /// The star rating's minimum value.
         public var min: Int?
-        
+
         /// The star rating's maximum value.
         public var max: Int?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaStarRating {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaStarRating.Attributes(attributes: attributeDict)
+        attributes = MediaStarRating.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaStarRating.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.average = Double(attributeDict["average"] ?? "")
-        self.count = Int(attributeDict["count"] ?? "")
+
+        average = Double(attributeDict["average"] ?? "")
+        count = Int(attributeDict["count"] ?? "")
         self.min = Int(attributeDict["min"] ?? "")
         self.max = Int(attributeDict["max"] ?? "")
-        
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaStarRating: Equatable {
-    
-    public static func ==(lhs: MediaStarRating, rhs: MediaStarRating) -> Bool {
+    public static func == (lhs: MediaStarRating, rhs: MediaStarRating) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaStarRating.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaStarRating.Attributes, rhs: MediaStarRating.Attributes) -> Bool {
+    public static func == (lhs: MediaStarRating.Attributes, rhs: MediaStarRating.Attributes) -> Bool {
         return
             lhs.average == rhs.average &&
             lhs.count == rhs.count &&
             lhs.min == rhs.min &&
             lhs.max == rhs.max
     }
-    
 }
-

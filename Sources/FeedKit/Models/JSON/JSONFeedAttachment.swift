@@ -26,28 +26,26 @@ import Foundation
 
 /// Describes optional attatchments of a JSON Feed item.
 public struct JSONFeedAttachment {
-    
     /// (required, string) specifies the location of the attachment.
     public var url: String?
-    
-    /// (required, string) specifies the type of the attachment, such as 
+
+    /// (required, string) specifies the type of the attachment, such as
     /// "audio/mpeg."
     public var mimeType: String?
-    
-    /// (optional, string) is a name for the attachment. Important: if there are 
-    /// multiple attachments, and two or more have the exact same title (when title 
-    /// is present), then they are considered as alternate representations of the 
-    /// same thing. In this way a podcaster, for instance, might provide an audio 
+
+    /// (optional, string) is a name for the attachment. Important: if there are
+    /// multiple attachments, and two or more have the exact same title (when title
+    /// is present), then they are considered as alternate representations of the
+    /// same thing. In this way a podcaster, for instance, might provide an audio
     /// recording in different formats.
     public var title: String?
-    
+
     /// (optional, number) specifies how large the file is.
     public var sizeInBytes: Int?
-    
-    /// (optional, number) specifies how long it takes to listen to or watch, when 
+
+    /// (optional, number) specifies how long it takes to listen to or watch, when
     /// played at normal speed.
     public var durationInSeconds: TimeInterval?
-    
 }
 
 // MARK: - Equatable
@@ -57,7 +55,6 @@ extension JSONFeedAttachment: Equatable {}
 // MARK: - Codable
 
 extension JSONFeedAttachment: Codable {
-    
     enum CodingKeys: String, CodingKey {
         case title
         case url
@@ -65,7 +62,7 @@ extension JSONFeedAttachment: Codable {
         case size_in_bytes
         case duration_in_seconds
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(title, forKey: .title)
@@ -74,7 +71,7 @@ extension JSONFeedAttachment: Codable {
         try container.encode(sizeInBytes, forKey: .size_in_bytes)
         try container.encode(durationInSeconds, forKey: .duration_in_seconds)
     }
-    
+
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         title = try values.decodeIfPresent(String.self, forKey: .title)
@@ -83,5 +80,4 @@ extension JSONFeedAttachment: Codable {
         sizeInBytes = try values.decodeIfPresent(Int.self, forKey: .size_in_bytes)
         durationInSeconds = try values.decodeIfPresent(TimeInterval.self, forKey: .duration_in_seconds)
     }
-    
 }

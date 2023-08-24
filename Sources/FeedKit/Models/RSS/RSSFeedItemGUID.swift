@@ -25,103 +25,89 @@
 import Foundation
 
 /// A string that uniquely identifies the item.
-/// 
+///
 /// Example: http://inessential.com/2002/09/01.php#a2
-/// 
+///
 /// <guid> is an optional sub-element of <item>.
-/// 
+///
 /// guid stands for globally unique identifier. It's a string that uniquely
 /// identifies the item. When present, an aggregator may choose to use this
 /// string to determine if an item is new.
-/// 
+///
 /// <guid>http://some.server.com/weblogItem3207</guid>
-/// 
+///
 /// There are no rules for the syntax of a guid. Aggregators must view them
 /// as a string. It's up to the source of the feed to establish the
 /// uniqueness of the string.
-/// 
+///
 /// If the guid element has an attribute named "isPermaLink" with a value of
 /// true, the reader may assume that it is a permalink to the item, that is,
 /// a url that can be opened in a Web browser, that points to the full item
 /// described by the <item> element. An example:
-/// 
+///
 /// <guid isPermaLink="true">http://inessential.com/2002/09/01.php#a2</guid>
-/// 
+///
 /// isPermaLink is optional, its default value is true. If its value is false,
 /// the guid may not be assumed to be a url, or a url to anything in
 /// particular.
 public class RSSFeedItemGUID {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// If the guid element has an attribute named "isPermaLink" with a value of
         /// true, the reader may assume that it is a permalink to the item, that is,
         /// a url that can be opened in a Web browser, that points to the full item
         /// described by the <item> element. An example:
-        /// 
+        ///
         /// <guid isPermaLink="true">http://inessential.com/2002/09/01.php#a2</guid>
-        /// 
+        ///
         /// isPermaLink is optional, its default value is true. If its value is false,
         /// the guid may not be assumed to be a url, or a url to anything in
         /// particular.
         public var isPermaLink: Bool?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension RSSFeedItemGUID {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = RSSFeedItemGUID.Attributes(attributes: attributeDict)
+        attributes = RSSFeedItemGUID.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension RSSFeedItemGUID.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.isPermaLink = attributeDict["isPermaLink"]?.toBool()
-        
+
+        isPermaLink = attributeDict["isPermaLink"]?.toBool()
     }
-    
 }
 
 // MARK: - Equatable
 
 extension RSSFeedItemGUID: Equatable {
-    
-    public static func ==(lhs: RSSFeedItemGUID, rhs: RSSFeedItemGUID) -> Bool {
+    public static func == (lhs: RSSFeedItemGUID, rhs: RSSFeedItemGUID) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension RSSFeedItemGUID.Attributes: Equatable {
-    
-    public static func ==(lhs: RSSFeedItemGUID.Attributes, rhs: RSSFeedItemGUID.Attributes) -> Bool {
+    public static func == (lhs: RSSFeedItemGUID.Attributes, rhs: RSSFeedItemGUID.Attributes) -> Bool {
         return lhs.isPermaLink == rhs.isPermaLink
     }
-    
 }

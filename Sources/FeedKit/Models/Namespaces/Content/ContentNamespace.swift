@@ -24,28 +24,24 @@
 
 import Foundation
 
-/// A module for the actual content of websites, in multiple formats. 
+/// A module for the actual content of websites, in multiple formats.
 /// See http://web.resource.org/rss/1.0/modules/content/
 public class ContentNamespace {
-    
     /// An element whose contents are the entity-encoded or CDATA-escaped version
-    /// of the content of the item. 
-    /// 
-    /// Example: 
+    /// of the content of the item.
+    ///
+    /// Example:
     /// <content:encoded><![CDATA[<p>What a <em>beautiful</em> day!</p>]]>
     /// </content:encoded>
     public var contentEncoded: String?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Equatable
 
 extension ContentNamespace: Equatable {
-    
-    public static func ==(lhs: ContentNamespace, rhs: ContentNamespace) -> Bool {
+    public static func == (lhs: ContentNamespace, rhs: ContentNamespace) -> Bool {
         return lhs.contentEncoded == rhs.contentEncoded
     }
-    
 }

@@ -32,21 +32,19 @@ public enum Feed: Equatable {
 
 // MARK: - Convenience properties
 
-extension Feed {
-    
-    public var rssFeed: RSSFeed? {
+public extension Feed {
+    var rssFeed: RSSFeed? {
         guard case let .rss(feed) = self else { return nil }
         return feed
     }
 
-    public var atomFeed: AtomFeed? {
+    var atomFeed: AtomFeed? {
         guard case let .atom(feed) = self else { return nil }
         return feed
     }
 
-    public var jsonFeed: JSONFeed? {
+    var jsonFeed: JSONFeed? {
         guard case let .json(feed) = self else { return nil }
         return feed
     }
-
 }

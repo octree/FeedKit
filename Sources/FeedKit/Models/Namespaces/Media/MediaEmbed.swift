@@ -28,79 +28,65 @@ import Foundation
 /// video. <media:embed> allows inclusion of such information in the form of
 /// key-value pairs.
 public class MediaEmbed {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The location of the embeded media.
         public var url: String?
-        
+
         /// The width size for the embeded Media.
         public var width: Int?
-        
+
         /// The height size for the embeded Media.
         public var height: Int?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// Key-Value pairs with aditional parameters for the embeded Media.
     public var mediaParams: [MediaParam]?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaEmbed {
-
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaEmbed.Attributes(attributes: attributeDict)
+        attributes = MediaEmbed.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaEmbed.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.url = attributeDict["url"]
-        self.width = Int(attributeDict["width"] ?? "")
-        self.height = Int(attributeDict["height"] ?? "")
-        
+
+        url = attributeDict["url"]
+        width = Int(attributeDict["width"] ?? "")
+        height = Int(attributeDict["height"] ?? "")
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaEmbed: Equatable {
-    
-    public static func ==(lhs: MediaEmbed, rhs: MediaEmbed) -> Bool {
+    public static func == (lhs: MediaEmbed, rhs: MediaEmbed) -> Bool {
         return
             lhs.mediaParams == rhs.mediaParams &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaEmbed.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaEmbed.Attributes, rhs: MediaEmbed.Attributes) -> Bool {
+    public static func == (lhs: MediaEmbed.Attributes, rhs: MediaEmbed.Attributes) -> Bool {
         return
             lhs.url == rhs.url &&
             lhs.width == rhs.width &&
             lhs.height == rhs.height
     }
-    
 }

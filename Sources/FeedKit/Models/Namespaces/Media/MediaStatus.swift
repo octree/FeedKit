@@ -27,74 +27,59 @@ import Foundation
 /// Optional tag to specify the status of a media object -- whether it's still
 /// active or it has been blocked/deleted.
 public class MediaStatus {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// State can have values "active", "blocked" or "deleted". "active" means 
-        /// a media object is active in the system, "blocked" means a media object 
-        /// is blocked by the publisher, "deleted" means a media object has been 
+        /// State can have values "active", "blocked" or "deleted". "active" means
+        /// a media object is active in the system, "blocked" means a media object
+        /// is blocked by the publisher, "deleted" means a media object has been
         /// deleted by the publisher.
         public var state: String?
-        
-        /// A reason explaining why a media object has been blocked/deleted. It can 
+
+        /// A reason explaining why a media object has been blocked/deleted. It can
         /// be plain text or a URL.
         public var reason: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaStatus {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaStatus.Attributes(attributes: attributeDict)
+        attributes = MediaStatus.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaStatus.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.state = attributeDict["state"]
-        self.reason = attributeDict["reason"]
-        
+
+        state = attributeDict["state"]
+        reason = attributeDict["reason"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaStatus: Equatable {
-    
-    public static func ==(lhs: MediaStatus, rhs: MediaStatus) -> Bool {
+    public static func == (lhs: MediaStatus, rhs: MediaStatus) -> Bool {
         return lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaStatus.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaStatus.Attributes, rhs: MediaStatus.Attributes) -> Bool {
+    public static func == (lhs: MediaStatus.Attributes, rhs: MediaStatus.Attributes) -> Bool {
         return
             lhs.state == rhs.state &&
             lhs.reason == rhs.reason
     }
-    
 }
-

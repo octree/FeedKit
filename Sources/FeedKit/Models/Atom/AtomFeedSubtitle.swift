@@ -27,71 +27,57 @@ import Foundation
 /// The "atom:subtitle" element is a Text construct that conveys a human-
 /// readable description or subtitle for a feed.
 public class AtomFeedSubtitle {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// Text constructs MAY have a "type" attribute.  When present, the value
         /// MUST be one of "text", "html", or "xhtml".  If the "type" attribute
         /// is not provided, Atom Processors MUST behave as though it were
         /// present with a value of "text".
         public var type: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension AtomFeedSubtitle {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = AtomFeedSubtitle.Attributes(attributes: attributeDict)
+        attributes = AtomFeedSubtitle.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension AtomFeedSubtitle.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type = attributeDict["type"]
-        
+
+        type = attributeDict["type"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension AtomFeedSubtitle: Equatable {
-    
-    public static func ==(lhs: AtomFeedSubtitle, rhs: AtomFeedSubtitle) -> Bool {
+    public static func == (lhs: AtomFeedSubtitle, rhs: AtomFeedSubtitle) -> Bool {
         return
             lhs.attributes == rhs.attributes &&
             lhs.value == rhs.value
     }
-    
 }
 
 extension AtomFeedSubtitle.Attributes: Equatable {
-    
-    public static func ==(lhs: AtomFeedSubtitle.Attributes, rhs: AtomFeedSubtitle.Attributes) -> Bool {
+    public static func == (lhs: AtomFeedSubtitle.Attributes, rhs: AtomFeedSubtitle.Attributes) -> Bool {
         return lhs.type == rhs.type
     }
-    
 }

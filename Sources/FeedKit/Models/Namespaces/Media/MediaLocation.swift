@@ -28,101 +28,83 @@ import Foundation
 /// locations captured in the content of a media object. The format conforms
 /// to geoRSS.
 public class MediaLocation {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// Description of the place whose location is being specified.
         public var description: String?
-        
-        /// Time at which the reference to a particular location starts in the 
+
+        /// Time at which the reference to a particular location starts in the
         /// media object.
         public var start: TimeInterval?
-        
-        /// Time at which the reference to a particular location ends in the media 
+
+        /// Time at which the reference to a particular location ends in the media
         /// object.
         public var end: TimeInterval?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The geoRSS's location latitude.
     public var latitude: Double?
-    
+
     /// The geoRSS's location longitude.
     public var longitude: Double?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaLocation {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaLocation.Attributes(attributes: attributeDict)
+        attributes = MediaLocation.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaLocation.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.description = attributeDict["description"]
-        self.start = attributeDict["start"]?.toDuration()
-        self.end = attributeDict["end"]?.toDuration()
-        
+
+        description = attributeDict["description"]
+        start = attributeDict["start"]?.toDuration()
+        end = attributeDict["end"]?.toDuration()
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaLocation: Equatable {
-    
-    public static func ==(lhs: MediaLocation, rhs: MediaLocation) -> Bool {
+    public static func == (lhs: MediaLocation, rhs: MediaLocation) -> Bool {
         return
             lhs.latitude == rhs.latitude &&
             lhs.longitude == rhs.longitude &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaLocation.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaLocation.Attributes, rhs: MediaLocation.Attributes) -> Bool {
+    public static func == (lhs: MediaLocation.Attributes, rhs: MediaLocation.Attributes) -> Bool {
         return
             lhs.description == rhs.description &&
             lhs.start == rhs.start &&
             lhs.end == rhs.end
     }
-    
 }
 
 // MARK: - Helpers
 
 extension MediaLocation {
-    
     func mapFrom(latLng: String) {
-
         let components = latLng.components(separatedBy: " ")
-        if  components.count == 2 {
-            self.latitude = Double(components.first ?? "")
-            self.longitude = Double(components.last ?? "")
+        if components.count == 2 {
+            latitude = Double(components.first ?? "")
+            longitude = Double(components.last ?? "")
         }
-        
     }
-    
 }

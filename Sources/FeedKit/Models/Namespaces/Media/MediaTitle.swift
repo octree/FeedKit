@@ -26,71 +26,55 @@ import Foundation
 
 /// The title of the particular media object. It has one optional attribute.
 public class MediaTitle {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// Specifies the type of text embedded. Possible values are either "plain" or "html". 
+        /// Specifies the type of text embedded. Possible values are either "plain" or "html".
         /// Default value is "plain". All HTML must be entity-encoded. It is an optional attribute.
         public var type: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
- 
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaTitle {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaTitle.Attributes(attributes: attributeDict)
+        attributes = MediaTitle.Attributes(attributes: attributeDict)
     }
-    
 }
 
-
 extension MediaTitle.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type = attributeDict["type"]
-        
+
+        type = attributeDict["type"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaTitle: Equatable {
-    
-    public static func ==(lhs: MediaTitle, rhs: MediaTitle) -> Bool {
+    public static func == (lhs: MediaTitle, rhs: MediaTitle) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaTitle.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaTitle.Attributes, rhs: MediaTitle.Attributes) -> Bool {
+    public static func == (lhs: MediaTitle.Attributes, rhs: MediaTitle.Attributes) -> Bool {
         return lhs.type == rhs.type
     }
-    
 }
-

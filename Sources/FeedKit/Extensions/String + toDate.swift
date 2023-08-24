@@ -25,7 +25,6 @@
 import Foundation
 
 extension String {
-    
     /// Attempts to convert the textual representation of a date with
     /// the specified `DateSpec` to a `Date` object.
     ///
@@ -33,12 +32,12 @@ extension String {
     /// - Returns: A `Date` object, or nil if the conversion failed.
     func toDate(from spec: DateSpec) -> Date? {
         switch spec {
-        case .rfc822:   return RFC822DateFormatter().date(from: self)
-        case .rfc3999:  return RFC3339DateFormatter().date(from: self)
-        case .iso8601:  return ISO8601DateFormatter().date(from: self)
+        case .rfc822: return RFC822DateFormatter().date(from: self)
+        case .rfc3999: return RFC3339DateFormatter().date(from: self)
+        case .iso8601: return ISO8601DateFormatter().date(from: self)
         }
     }
-    
+
     /// Attempts to convert the textual representation of a date to a
     /// `Date` object according to several common schemes.
     ///
@@ -46,7 +45,6 @@ extension String {
     func toPermissiveDate() -> Date? {
         return RFC822DateFormatter().date(from: self) ??
             (RFC3339DateFormatter().date(from: self) ??
-            ISO8601DateFormatter().date(from: self))
+                ISO8601DateFormatter().date(from: self))
     }
-    
 }

@@ -34,15 +34,14 @@ import Foundation
 /// the child elements atom:author, atom:contributor, atom:rights, or
 /// atom:category and those child elements are not present in the source
 /// atom:entry.
-/// 
+///
 /// The atom:source element is designed to allow the aggregation of
-/// entries from different feeds while retaining information about an 
+/// entries from different feeds while retaining information about an
 /// entry's source feed. For this reason, Atom Processors that are
 /// performing such aggregation SHOULD include at least the required
-/// feed-level Metadata elements (atom:id, atom:title, and atom:updated) 
+/// feed-level Metadata elements (atom:id, atom:title, and atom:updated)
 /// in the atom:source element.
 public class AtomFeedEntrySource {
-    
     /// The "atom:id" element conveys a permanent, universally unique
     /// identifier for an entry or feed.
     public var id: String?
@@ -50,26 +49,23 @@ public class AtomFeedEntrySource {
     /// The "atom:title" element is a Text construct that conveys a human-
     /// readable title for an entry or feed.
     public var title: String?
-    
+
     /// The "atom:updated" element is a Date construct indicating the most
     /// recent instant in time when an entry or feed was modified in a way
     /// the publisher considers significant.  Therefore, not all
     /// modifications necessarily result in a changed atom:updated value.
     public var updated: Date?
-    
-    public init() { }
-    
+
+    public init() {}
 }
 
 // MARK: - Equatable
 
 extension AtomFeedEntrySource: Equatable {
-    
-    public static func ==(lhs: AtomFeedEntrySource, rhs: AtomFeedEntrySource) -> Bool {
+    public static func == (lhs: AtomFeedEntrySource, rhs: AtomFeedEntrySource) -> Bool {
         return
             lhs.id == rhs.id &&
             lhs.title == rhs.title &&
             lhs.updated == rhs.updated
     }
-    
 }

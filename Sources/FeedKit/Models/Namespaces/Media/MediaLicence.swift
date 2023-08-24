@@ -27,75 +27,60 @@ import Foundation
 /// Optional link to specify the machine-readable license associated with the
 /// content.
 public class MediaLicence {
-    
     /// The element's attributes.
     public class Attributes {
-        
         /// The licence type.
         public var type: String?
-        
+
         /// The location of the licence.
         public var href: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaLicence {
-
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaLicence.Attributes(attributes: attributeDict)
+        attributes = MediaLicence.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaLicence.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type = attributeDict["type"]
-        self.href = attributeDict["href"]
-        
+
+        type = attributeDict["type"]
+        href = attributeDict["href"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaLicence: Equatable {
-    
-    public static func ==(lhs: MediaLicence, rhs: MediaLicence) -> Bool {
+    public static func == (lhs: MediaLicence, rhs: MediaLicence) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaLicence.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaLicence.Attributes, rhs: MediaLicence.Attributes) -> Bool {
+    public static func == (lhs: MediaLicence.Attributes, rhs: MediaLicence.Attributes) -> Bool {
         return
             lhs.type == rhs.type &&
             lhs.href == rhs.href
     }
-    
 }
-

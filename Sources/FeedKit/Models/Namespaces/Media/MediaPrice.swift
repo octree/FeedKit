@@ -30,87 +30,72 @@ import Foundation
 /// pricing structures. The presence of this tag would mean that media object
 /// is not free.
 public class MediaPrice {
-    
     /// The element's attributes.
     public class Attributes {
-        
-        /// Valid values are "rent", "purchase", "package" or "subscription". If 
+        /// Valid values are "rent", "purchase", "package" or "subscription". If
         /// nothing is specified, then the media is free.
         public var type: String?
-        
+
         /// The price of the media object. This is an optional attribute.
         public var price: Double?
-        
+
         /// If the type is "package" or "subscription", then info is a URL pointing
         /// to package or subscription information. This is an optional attribute.
         public var info: String?
-        
+
         /// Use [ISO 4217] for currency codes. This is an optional attribute.
         public var currency: String?
-        
     }
-    
+
     /// The element's attributes.
     public var attributes: Attributes?
-    
+
     /// The element's value.
     public var value: String?
-    
-    public init() { }
 
+    public init() {}
 }
 
 // MARK: - Initializers
 
 extension MediaPrice {
-    
-    convenience init(attributes attributeDict: [String : String]) {
+    convenience init(attributes attributeDict: [String: String]) {
         self.init()
-        self.attributes = MediaPrice.Attributes(attributes: attributeDict)
+        attributes = MediaPrice.Attributes(attributes: attributeDict)
     }
-    
 }
 
 extension MediaPrice.Attributes {
-    
-    convenience init?(attributes attributeDict: [String : String]) {
-        
+    convenience init?(attributes attributeDict: [String: String]) {
         if attributeDict.isEmpty {
             return nil
         }
-        
+
         self.init()
-        
-        self.type = attributeDict["type"]
-        self.price = Double(attributeDict["price"] ?? "")
-        self.info = attributeDict["info"]
-        self.currency = attributeDict["currency"]
-        
+
+        type = attributeDict["type"]
+        price = Double(attributeDict["price"] ?? "")
+        info = attributeDict["info"]
+        currency = attributeDict["currency"]
     }
-    
 }
 
 // MARK: - Equatable
 
 extension MediaPrice: Equatable {
-    
-    public static func ==(lhs: MediaPrice, rhs: MediaPrice) -> Bool {
+    public static func == (lhs: MediaPrice, rhs: MediaPrice) -> Bool {
         return
             lhs.value == rhs.value &&
             lhs.attributes == rhs.attributes
     }
-    
 }
 
 extension MediaPrice.Attributes: Equatable {
-    
-    public static func ==(lhs: MediaPrice.Attributes, rhs: MediaPrice.Attributes) -> Bool {
+    public static func == (lhs: MediaPrice.Attributes, rhs: MediaPrice.Attributes) -> Bool {
         return
             lhs.type == rhs.type &&
             lhs.price == rhs.price &&
             lhs.info == rhs.info &&
             lhs.currency == rhs.currency
     }
-    
 }
-

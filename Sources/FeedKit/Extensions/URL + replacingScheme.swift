@@ -33,9 +33,8 @@ extension URL {
     ///   - replacement: The replacement scheme
     func replacing<Target, Replacement>(
         scheme target: Target,
-        with replacement: Replacement)
-        -> URL? where Target : StringProtocol, Replacement : StringProtocol
-    {
+        with replacement: Replacement
+    ) -> URL? where Target: StringProtocol, Replacement: StringProtocol {
         var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true)
         let isTargetScheme = urlComponents?.scheme?.caseInsensitiveCompare(target) == ComparisonResult.orderedSame
         if isTargetScheme {

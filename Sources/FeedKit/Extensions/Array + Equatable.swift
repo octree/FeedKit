@@ -30,9 +30,9 @@ import Foundation
 ///   - lhs: The left-hand side
 ///   - rhs: The right-hand side
 /// - Returns: A boolean value
-public func ==<T: Equatable>(lhs: [T]?, rhs: [T]?) -> Bool {
-    switch (lhs,rhs) {
-    case (.some(let lhs), .some(let rhs)):
+public func == <T: Equatable>(lhs: [T]?, rhs: [T]?) -> Bool {
+    switch (lhs, rhs) {
+    case let (.some(lhs), .some(rhs)):
         return lhs == rhs
     case (.none, .none):
         return true
