@@ -29,7 +29,7 @@ class ParserErrorTests: BaseTestCase {
     func testParserResult() async {
         // Given
         let URL = fileURL("FeedNotFound", type: "xml")
-        let parser = FeedParser(URL: URL)
+        let parser = FeedParser(url: URL)
 
         do {
             _ = try await parser.parse()

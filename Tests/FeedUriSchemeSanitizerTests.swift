@@ -29,7 +29,7 @@ class FeedUriSchemeSanitizerTests: XCTestCase {
     func testFeedUriSchemeSanitizer() async {
         // Given
         let feedURL = URL(string: "feed://images.apple.com/main/rss/hotnews/hotnews.rss")!
-        let parser = FeedParser(URL: feedURL)
+        let parser = FeedParser(url: feedURL)
 
         do {
             // When

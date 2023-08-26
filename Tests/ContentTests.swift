@@ -29,7 +29,7 @@ class ContentTests: BaseTestCase {
     func testContent() async {
         // Given
         let URL = fileURL("Content", type: "xml")
-        let parser = FeedParser(URL: URL)
+        let parser = FeedParser(url: URL)
 
         do {
             // When
@@ -49,7 +49,7 @@ class ContentTests: BaseTestCase {
             // Given
             let expectation = self.expectation(description: "Content Parsing Performance")
             let URL = self.fileURL("Content", type: "xml")
-            let parser = FeedParser(URL: URL)
+            let parser = FeedParser(url: URL)
 
             // When
             Task.detached {
