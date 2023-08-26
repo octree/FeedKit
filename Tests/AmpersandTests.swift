@@ -20,22 +20,21 @@
 //  SOFTWARE.
 //
 
-import XCTest
 import FeedKit
+import XCTest
 
 class AmpersandTests: BaseTestCase {
-    
     var document: Data?
-    
+
     override func setUp() {
         let url = fileURL("Ampersand", type: "xml")
         document = try? Data(contentsOf: url)
     }
-    
-    func testUnquotedAmpersands() {
+
+    func testUnquotedAmpersands() async {
         if let document = document {
             let parser = FeedParser(data: document)
-            let feed = try? parser.parse().get().rssFeed
+            let feed = try? await parser.parse().rssFeed
             // Currently will fail because XMLParser strictly enforces the prohibition
             // against unquoted ampersands. Ideally, parsing would be more tolerant.
             XCTAssertNil(feed ?? nil)
@@ -43,24 +42,22 @@ class AmpersandTests: BaseTestCase {
             XCTFail("Missing unquoted ampersand XML test document")
         }
     }
-    
-    func testQuotedAmpersands() {
+
+    func testQuotedAmpersands() async {
         if let document = document, let groomed = document.groomXML() {
             let parser = FeedParser(data: groomed)
-            let feed = try? parser.parse().get().rssFeed
+            let feed = try? await parser.parse().rssFeed
             XCTAssertNotNil(feed ?? nil)
         }
     }
-
 }
 
 extension Data {
-    
     // Proof of concept for ampersand fixup. Preserves original encoding. The wisdom of
     // actually attempting this grooming for the mainline parser is unclear. This regular
     // expression is just a quick hack and probably botches some edge cases. Performance
     // is likely terrible.
-    
+
     func groomXML() -> Data? {
         var dataString: NSString?
         let encoding = NSString.stringEncoding(for: self, encodingOptions: nil, convertedString: &dataString, usedLossyConversion: nil)
@@ -72,5 +69,4 @@ extension Data {
         }
         return nil
     }
-    
 }

@@ -67,12 +67,12 @@ public class FeedParser {
         if let url = url {
             // The `Data(contentsOf:)` initializer doesn't handle the `feed` URI scheme. As such,
             // it's sanitized first, in case it's in fact a `feed` scheme.
-            guard let sanitizedSchemeUrl = url.replacing(scheme: "feed", with: "http") else {
+            guard let sanitizedSchemeUrl = url.replacing(scheme: "feed", with: "https") else {
                 throw ParserError.internalError(reason: "Failed url sanitizing.")
             }
 
             do {
-                (data, _) = try await URLSession.shared.data(from: url)
+                (data, _) = try await URLSession.shared.data(from: sanitizedSchemeUrl)
             } catch {
                 throw ParserError.internalError(reason: error.localizedDescription)
             }

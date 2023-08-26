@@ -22,55 +22,42 @@
 //  SOFTWARE.
 //
 
-import XCTest
 import FeedKit
+import XCTest
 
 class ContentTests: BaseTestCase {
-    
-    func testContent() {
-        
+    func testContent() async {
         // Given
         let URL = fileURL("Content", type: "xml")
         let parser = FeedParser(URL: URL)
-        
+
         do {
             // When
-            let feed = try parser.parse().get().rssFeed
+            let feed = try await parser.parse().rssFeed
 
             // Then
             XCTAssertNotNil(feed)
             XCTAssertNotNil(feed?.items?.last?.content)
             XCTAssertEqual(feed?.items?.last?.content?.contentEncoded, "<p>What a <em>beautiful</em> day!</p>")
-            
         } catch {
             XCTFail(error.localizedDescription)
         }
-        
-        
-        
     }
-    
+
     func testContentParsingPerformance() {
-        
-        self.measure {
-            
+        measure {
             // Given
             let expectation = self.expectation(description: "Content Parsing Performance")
             let URL = self.fileURL("Content", type: "xml")
             let parser = FeedParser(URL: URL)
-            
+
             // When
-            parser.parseAsync { (result) in
-                
-                // Then
+            Task.detached {
+                _ = try await parser.parse()
                 expectation.fulfill()
-                
             }
-            
+
             self.waitForExpectations(timeout: self.timeout, handler: nil)
-            
         }
-        
     }
-    
 }

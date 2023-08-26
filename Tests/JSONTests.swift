@@ -22,18 +22,16 @@
 //  SOFTWARE.
 //
 
-import XCTest
 @testable import FeedKit
+import XCTest
 
 class JSONTests: BaseTestCase {
-    
-    func testJSONFeed() {
-        
+    func testJSONFeed() async {
         // Given
         let URL = fileURL("feed", type: "json")
         let parser = FeedParser(URL: URL)
         var jsonFeed = JSONFeed()
-        
+
         jsonFeed.version = "https://jsonfeed.org/version/1"
         jsonFeed.title = "Title"
         jsonFeed.userComment = "User comment"
@@ -86,14 +84,14 @@ class JSONTests: BaseTestCase {
                         url: "http://therecord.co/downloads/The-Record-sp1e1-ChrisParrish-128.m4a",
                         mimeType: "audio/x-m4a",
                         title: "128Kb's version",
-                        sizeInBytes: 63207998,
+                        sizeInBytes: 63_207_998,
                         durationInSeconds: 6629
                     ),
                     JSONFeedAttachment(
                         url: "http://therecord.co/downloads/The-Record-sp1e1-ChrisParrish-256.m4a",
                         mimeType: "audio/x-m4a",
                         title: "256Kb's version",
-                        sizeInBytes: 89970236,
+                        sizeInBytes: 89_970_236,
                         durationInSeconds: 6629
                     )
                 ]
@@ -115,20 +113,15 @@ class JSONTests: BaseTestCase {
                 attachments: nil
             )
         ]
-        
+
         do {
             // When
-            let parsedJsonFeed = try parser.parse().get().jsonFeed
-
+            let parsedJsonFeed = try await parser.parse().jsonFeed
             // Then
             XCTAssertEqual(parsedJsonFeed, jsonFeed)
-            
+
         } catch {
             XCTFail(error.localizedDescription)
         }
-        
-
-        
     }
-    
 }

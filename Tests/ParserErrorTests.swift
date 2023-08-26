@@ -22,26 +22,20 @@
 //  SOFTWARE.
 //
 
-import XCTest
 @testable import FeedKit
+import XCTest
 
 class ParserErrorTests: BaseTestCase {
-    
-    func testParserResult() {
-        
+    func testParserResult() async {
         // Given
         let URL = fileURL("FeedNotFound", type: "xml")
         let parser = FeedParser(URL: URL)
-        
-        // When
-        let result = parser.parse()
-        
-        // Then
-        switch result {
-        case .failure(let error): XCTAssertEqual(error, .feedNotFound)
-        case .success(_): XCTFail("Unexpected feed found")
+
+        do {
+            _ = try await parser.parse()
+            XCTFail("Unexpected feed found")
+        } catch {
+            XCTAssertEqual(error as? ParserError, .feedNotFound)
         }
-        
     }
-    
 }

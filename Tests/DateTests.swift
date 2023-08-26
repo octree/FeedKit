@@ -22,78 +22,72 @@
 //  SOFTWARE.
 //
 
-import XCTest
 @testable import FeedKit
+import XCTest
 
 class DateTests: BaseTestCase {
-    
     func testRFC822DateFormatter() {
-        
         // Given
         let rfc822DateFormatter = RFC822DateFormatter()
         let dateString = "Tue, 04 Feb 2014 22:03:45 Z"
-        
+
         var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         calendar.locale = Locale(identifier: "en_US_POSIX")
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
+
         // When
         let date = rfc822DateFormatter.date(from: dateString)
-        
+
         // Then
         XCTAssertNotNil(date)
-        
+
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date!)
-        
+
         XCTAssertEqual(components.day, 4)
         XCTAssertEqual(components.month, 2)
         XCTAssertEqual(components.year, 2014)
         XCTAssertEqual(components.hour, 22)
         XCTAssertEqual(components.minute, 3)
         XCTAssertEqual(components.second, 45)
-        
     }
-    
+
     func testRFC3339DateFormatter() {
-        
         // Given
         let rfc3339DateFormatter = RFC3339DateFormatter()
         let dateString = "2016-01-15T15:54:10-01:00"
-        
+
         var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         calendar.locale = Locale(identifier: "en_US_POSIX")
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
+
         // When
         let date = rfc3339DateFormatter.date(from: dateString)
-        
+
         // Then
         XCTAssertNotNil(date)
-        
+
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date!)
-        
+
         XCTAssertEqual(components.day, 15)
         XCTAssertEqual(components.month, 1)
         XCTAssertEqual(components.year, 2016)
         XCTAssertEqual(components.hour, 16)
         XCTAssertEqual(components.minute, 54)
         XCTAssertEqual(components.second, 10)
-        
     }
-    
+
     func testISO8601DateFormatter() {
-        
         // Given
         let iso8601DateFormatter = RFC3339DateFormatter()
         let dateStrings = [
             "1994-11-05T08:15:30-05:00",
             "1994-11-05T13:15:30"
         ]
-        
+
         var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         calendar.locale = Locale(identifier: "en_US_POSIX")
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
+
         // When
         dateStrings.forEach { dateString in
             let date = iso8601DateFormatter.date(from: dateString)
@@ -111,9 +105,8 @@ class DateTests: BaseTestCase {
             XCTAssertEqual(components.second, 30)
         }
     }
-    
+
     func testDateFromRFC822Spec() {
-        
         // Given
         let spec = DateSpec.rfc822
         let dateStrings = [
@@ -134,19 +127,17 @@ class DateTests: BaseTestCase {
             "Sun, 05 Jun 2016 01:52:30 -0700",
             "Thu, 02 Jun 2016 15:24:37 +0000"
         ]
-        
+
         // When
-        let dates = dateStrings.compactMap { (dateString) -> Date? in
-            return dateString.toDate(from: spec)
+        let dates = dateStrings.compactMap { dateString -> Date? in
+            dateString.toDate(from: spec)
         }
-        
+
         // Then
         XCTAssertEqual(dateStrings.count, dates.count)
-        
     }
-    
+
     func testDateFromRFC3339Spec() {
-        
         // Given
         let spec = DateSpec.rfc3999
         let dateStrings = [
@@ -161,17 +152,15 @@ class DateTests: BaseTestCase {
             "2016-06-05T03:12:10+00:00",
             "2015-02-22T13:13:48-05:00",
             "2016-06-03T23:33:00-04:00",
-            "1996-12-19T16:39:57-08:00",
+            "1996-12-19T16:39:57-08:00"
         ]
-        
+
         // When
-        let dates = dateStrings.compactMap { (dateString) -> Date? in
-            return dateString.toDate(from: spec)
+        let dates = dateStrings.compactMap { dateString -> Date? in
+            dateString.toDate(from: spec)
         }
-        
+
         // Then
         XCTAssertEqual(dateStrings.count, dates.count)
-        
     }
-    
 }

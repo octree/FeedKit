@@ -22,54 +22,43 @@
 //  SOFTWARE.
 //
 
-import XCTest
 import FeedKit
+import XCTest
 
 class SyndicationTests: BaseTestCase {
-    
-    func testSyndication() {
-
+    func testSyndication() async {
         // Given
         let URL = fileURL("Syndication", type: "xml")
         let parser = FeedParser(URL: URL)
 
         do {
             // When
-            let feed = try parser.parse().get().rssFeed
-            
+            let feed = try await parser.parse().rssFeed
+
             // Then
             XCTAssertNotNil(feed)
-            XCTAssertEqual(feed?.syndication?.syUpdatePeriod , SyndicationUpdatePeriod.hourly)
-            XCTAssertEqual(feed?.syndication?.syUpdateFrequency , Int(2))
+            XCTAssertEqual(feed?.syndication?.syUpdatePeriod, SyndicationUpdatePeriod.hourly)
+            XCTAssertEqual(feed?.syndication?.syUpdateFrequency, Int(2))
             XCTAssertNotNil(feed?.syndication?.syUpdateBase)
-            
+
         } catch {
             XCTFail(error.localizedDescription)
         }
-        
     }
-    
+
     func testSyndicationParsingPerformance() {
-        
-        self.measure {
-            
+        measure {
             // Given
             let expectation = self.expectation(description: "Syndication Parsing Performance")
             let URL = self.fileURL("Syndication", type: "xml")
             let parser = FeedParser(URL: URL)
-            
-            // When
-            parser.parseAsync { (result) in
-                
-                // Then
+
+            Task.detached {
+                _ = try await parser.parse()
                 expectation.fulfill()
-                
             }
 
             self.waitForExpectations(timeout: self.timeout, handler: nil)
-            
         }
-        
     }
-    
 }

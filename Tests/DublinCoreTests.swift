@@ -22,24 +22,22 @@
 //  SOFTWARE.
 //
 
-import XCTest
 import FeedKit
+import XCTest
 
 class DublinCoreTests: BaseTestCase {
-    
-    func testRSSDublinCore() {
-        
+    func testRSSDublinCore() async {
         // Given
         let URL = fileURL("RSSDC", type: "xml")
         let parser = FeedParser(URL: URL)
-        
+
         do {
             // When
-            let feed = try parser.parse().get().rssFeed
+            let feed = try await parser.parse().rssFeed
 
             // Then
             XCTAssertNotNil(feed)
-            
+
             XCTAssertEqual(feed?.dublinCore?.dcTitle, "title")
             XCTAssertEqual(feed?.dublinCore?.dcCreator, "creator")
             XCTAssertEqual(feed?.dublinCore?.dcSubject, "subject")
@@ -55,9 +53,9 @@ class DublinCoreTests: BaseTestCase {
             XCTAssertEqual(feed?.dublinCore?.dcRelation, "relation")
             XCTAssertEqual(feed?.dublinCore?.dcCoverage, "coverage")
             XCTAssertEqual(feed?.dublinCore?.dcRights, "rights")
-            
+
             XCTAssertNotNil(feed?.items?.last?.dublinCore)
-            
+
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcTitle, "title")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcCreator, "creator")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcSubject, "subject")
@@ -73,51 +71,40 @@ class DublinCoreTests: BaseTestCase {
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcRelation, "relation")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcCoverage, "coverage")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcRights, "rights")
-            
+
         } catch {
             XCTFail(error.localizedDescription)
         }
-        
-        
-        
     }
-    
+
     func testRssDublinCoreParsingPerformance() {
-        
-        self.measure {
-            
+        measure {
             // Given
             let expectation = self.expectation(description: "Dublin Core Parsing Performance")
             let URL = self.fileURL("RSSDC", type: "xml")
             let parser = FeedParser(URL: URL)
-            
-            // When
-            parser.parseAsync{ (result) in
-                
-                // Then
+
+            Task.detached {
+                _ = try await parser.parse()
                 expectation.fulfill()
-                
             }
-            
+
             self.waitForExpectations(timeout: self.timeout, handler: nil)
-            
         }
-        
     }
- 
-    func testRDFDublinCore() {
-        
+
+    func testRDFDublinCore() async {
         // Given
         let URL = fileURL("RDFDC", type: "xml")
         let parser = FeedParser(URL: URL)
-        
+
         do {
             // When
-            let feed = try parser.parse().get().rssFeed
+            let feed = try await parser.parse().rssFeed
 
             // Then
             XCTAssertNotNil(feed)
-            
+
             XCTAssertEqual(feed?.dublinCore?.dcTitle, "title")
             XCTAssertEqual(feed?.dublinCore?.dcCreator, "creator")
             XCTAssertEqual(feed?.dublinCore?.dcSubject, "subject")
@@ -133,9 +120,9 @@ class DublinCoreTests: BaseTestCase {
             XCTAssertEqual(feed?.dublinCore?.dcRelation, "relation")
             XCTAssertEqual(feed?.dublinCore?.dcCoverage, "coverage")
             XCTAssertEqual(feed?.dublinCore?.dcRights, "rights")
-            
+
             XCTAssertNotNil(feed?.items?.last?.dublinCore)
-            
+
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcTitle, "title")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcCreator, "creator")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcSubject, "subject")
@@ -151,36 +138,25 @@ class DublinCoreTests: BaseTestCase {
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcRelation, "relation")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcCoverage, "coverage")
             XCTAssertEqual(feed?.items?.last?.dublinCore?.dcRights, "rights")
-            
+
         } catch {
             XCTFail(error.localizedDescription)
         }
-        
-        
-        
     }
-    
+
     func testRDFDublinCoreParsingPerformance() {
-        
-        self.measure {
-            
+        measure {
             // Given
             let expectation = self.expectation(description: "Dublin Core Parsing Performance")
             let URL = self.fileURL("RDFDC", type: "xml")
             let parser = FeedParser(URL: URL)
-            
-            // When
-            parser.parseAsync{ (result) in
-                
-                // Then
+
+            Task.detached {
+                _ = try await parser.parse()
                 expectation.fulfill()
-                
             }
-            
+
             self.waitForExpectations(timeout: self.timeout, handler: nil)
-            
         }
-        
     }
-    
 }

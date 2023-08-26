@@ -22,13 +22,11 @@
 //  SOFTWARE.
 //
 
-import XCTest
 @testable import FeedKit
+import XCTest
 
 class DurationTests: BaseTestCase {
-    
     func testToDuration() {
-        
         // Given
         let hhmmss = "01:15:15"
         let hmmss = "1:20:25"
@@ -53,5 +51,4 @@ class DurationTests: BaseTestCase {
         XCTAssertEqual(leadingZeroes.toDuration(), 4515)
         XCTAssertNil(tachyon.toDuration())
     }
-    
 }
