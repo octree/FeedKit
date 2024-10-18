@@ -24,7 +24,7 @@
 
 import Foundation
 
-public enum Feed: Equatable {
+public enum Feed: Equatable, @unchecked Sendable {
     case atom(AtomFeed)
     case rss(RSSFeed)
     case json(JSONFeed)

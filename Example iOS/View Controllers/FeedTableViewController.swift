@@ -28,8 +28,6 @@ import UIKit
 let feedURL = URL(string: "https://cyandev.app/blog/rss.xml")!
 
 class FeedTableViewController: UITableViewController {
-    let parser = FeedParser(URL: feedURL)
-
     var rssFeed: RSSFeed?
 
     override func viewDidLoad() {
@@ -39,7 +37,7 @@ class FeedTableViewController: UITableViewController {
 
         Task {
             do {
-                try await updateFeed(parser.parse())
+                try await updateFeed(FeedParser(url: feedURL).parse())
             } catch {
                 print(error)
             }
@@ -47,7 +45,7 @@ class FeedTableViewController: UITableViewController {
 
         Task {
             do {
-                let feed = try await FeedParser(URL: URL(string: "https://github.com/SwiftOldDriver/iOS-Weekly/releases.atom")!).parse()
+                let feed = try await FeedParser(url: URL(string: "https://github.com/SwiftOldDriver/iOS-Weekly/releases.atom")!).parse()
                 let atom = feed.atomFeed
                 print(atom?.title)
             } catch {
